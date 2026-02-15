@@ -23,12 +23,39 @@ export default function About() {
         <article className="container">
           <AnimateOnScroll>
             <div className="card" style={{ maxWidth: 720 }}>
-              <p><strong>{settings.name || 'Ultimate College of Technology'}</strong> is a high school offering Forms 1–6 in Harare, Zimbabwe, under the ZIMSEC examination authority.</p>
-              <p>We provide a structured academic environment with streams and classes, continuous assessment, term and final examinations, and dedicated support for Form 4 and Form 6 candidates.</p>
-              <p><strong>Location:</strong> {settings.address || '2508 Mainway Meadows, Harare, Zimbabwe'}</p>
-              <p><strong>Contact:</strong> {settings.phone || '07795977691'}</p>
+              <p>
+                <strong>{settings.name || "Ultimate College of Technology"}</strong> is a
+                forward-looking high school delivering quality education from
+                <strong> Form 1 to Form 6</strong> in Harare, Zimbabwe, fully aligned with
+                the <strong>ZIMSEC</strong> curriculum and assessment standards.
+              </p>
+
+              <p>
+                The College is built on a culture of <strong>academic discipline,
+                  structured learning, and measurable performance</strong>. Learners are
+                guided through well-defined streams and classes, supported by continuous
+                assessment, term examinations, and rigorous final exam preparation.
+              </p>
+
+              <p>
+                Special focus is placed on <strong>Form 4 and Form 6 candidates</strong>,
+                ensuring they receive targeted academic support, regular progress
+                tracking, and examination-ready instruction that meets national
+                benchmarks.
+              </p>
+
+              <p>
+                Conveniently located at <strong>{settings.address || "2508 Mainway Meadows, Harare, Zimbabwe"}</strong>,
+                the College partners closely with parents and guardians to develop
+                confident, disciplined, and future-ready learners.
+              </p>
+
+              <p>
+                <strong>Contact:</strong> {settings.phone || "07795977691"}
+              </p>
             </div>
           </AnimateOnScroll>
+
         </article>
       </div>
     </>
