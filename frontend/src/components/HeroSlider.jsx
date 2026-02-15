@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const SLIDES = [
   {
-    image: 'https://www.google.com/imgres?q=zimbabwean%20colleges%20college&imgurl=https%3A%2F%2Fcdn.thestandard.co.zw%2Fnewsday%2Fuploads%2F2016%2F02%2Fschools-banner4.jpg&imgrefurl=https%3A%2F%2Fwww.newsday.co.zw%2Fnews%2Farticle%2F91959%2Fhigh-pass-rate-at-st-ignatius-college&docid=6CZl_QwrD7yPTM&tbnid=bdeLnZsFDYtxxM&vet=12ahUKEwi-iYOf8NuSAxWjW0EAHQ3KNVAQnPAOegQIRRAB..i&w=920&h=500&hcb=2&ved=2ahUKEwi-iYOf8NuSAxWjW0EAHQ3KNVAQnPAOegQIRRAB', // Brick University Building (No people)
+    image: 'https://images.unsplash.com/photo-1564981797816-1043664bf78d?q=80&w=2574&auto=format&fit=crop', // Brick University Building (No people)
     title: 'Excellence in Form 4 & Form 6',
     subtitle: 'Premier ZIMSEC examination center producing top results in Harare.',
     cta: { label: 'Apply for Form 1-6', to: '/admissions' },
