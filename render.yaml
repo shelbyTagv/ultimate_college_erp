@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: ultimate-college-backend
+    runtime: python
+    plan: free
+    region: ohio
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn src.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+      - key: JWT_SECRET
+      - key: CORS_ORIGINS
