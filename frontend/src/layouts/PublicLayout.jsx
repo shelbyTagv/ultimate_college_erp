@@ -31,7 +31,7 @@ export default function PublicLayout() {
           </nav>
         </div>
       </header>
-      <main style={{ minHeight: 'calc(100vh - 140px)' }} role="main" id="main-content">
+      <main className="page-wrap page-wrap--public" style={{ minHeight: 'calc(100vh - 140px)' }} role="main" id="main-content">
         <Outlet />
       </main>
       <footer className="site-footer" style={footerStyle} role="contentinfo">

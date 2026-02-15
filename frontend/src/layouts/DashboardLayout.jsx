@@ -148,7 +148,7 @@ export default function DashboardLayout({ role }) {
             <button type="button" className="btn btn-outline" onClick={handleLogout} style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }}>Logout</button>
           </div>
         </header>
-        <main style={{ flex: 1, padding: '1.5rem' }}>
+        <main className="dashboard-page" style={{ flex: 1, padding: '1.5rem' }}>
           <Outlet />
         </main>
       </div>

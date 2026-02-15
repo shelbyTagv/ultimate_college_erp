@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 /**
  * Hero slider for the home page.
  * Pass slides as: [{ image: '/path/to/image.jpg', title: '...', subtitle: '...', cta: { label: '...', to: '/path' } }, ...]
+ * addressDetails: { address, phone } shown in the hero section.
  * Add your school photos: put images in frontend/public/images/ and set image: '/images/your-photo.jpg'.
  * Omit image or use '' for a gradient placeholder.
  */
@@ -28,7 +29,24 @@ const DEFAULT_SLIDES = [
   },
 ]
 
-export default function HeroSlider({ slides = DEFAULT_SLIDES, interval = 5500 }) {
+const DEFAULT_ADDRESS = {
+  address: '2508 Mainway Meadows, Harare, Zimbabwe',
+  phone: '07795977691',
+}
+
+function GraduationCapDeco({ className }) {
+  return (
+    <span className={className} aria-hidden>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M32 8L8 22v4l24 14 24-14v-4L32 8z" />
+        <path d="M8 26l24 14 24-14" />
+        <path d="M32 22v20M32 42l4-4" />
+      </svg>
+    </span>
+  )
+}
+
+export default function HeroSlider({ slides = DEFAULT_SLIDES, interval = 5500, addressDetails = DEFAULT_ADDRESS }) {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
 
@@ -49,6 +67,9 @@ export default function HeroSlider({ slides = DEFAULT_SLIDES, interval = 5500 })
     const t = setInterval(next, interval)
     return () => clearInterval(t)
   }, [paused, next, interval])
+
+  const address = addressDetails?.address || DEFAULT_ADDRESS.address
+  const phone = addressDetails?.phone || DEFAULT_ADDRESS.phone
 
   return (
     <section
@@ -75,6 +96,8 @@ export default function HeroSlider({ slides = DEFAULT_SLIDES, interval = 5500 })
               }
             />
             <div className="hero-slider__overlay" />
+            <GraduationCapDeco className="hero-slider__deco hero-slider__deco--tl" />
+            <GraduationCapDeco className="hero-slider__deco hero-slider__deco--br" />
             <div className="hero-slider__content container">
               <h1 className="hero-slider__title">{slide.title}</h1>
               {slide.subtitle && <p className="hero-slider__subtitle">{slide.subtitle}</p>}
@@ -83,6 +106,11 @@ export default function HeroSlider({ slides = DEFAULT_SLIDES, interval = 5500 })
                   {slide.cta.label}
                 </Link>
               )}
+              <div className="hero-slider__address">
+                <span className="hero-slider__address-line">{address}</span>
+                <span className="hero-slider__address-sep"> · </span>
+                <a className="hero-slider__address-phone" href={`tel:${phone.replace(/\s/g, '')}`}>{phone}</a>
+              </div>
             </div>
           </div>
         ))}

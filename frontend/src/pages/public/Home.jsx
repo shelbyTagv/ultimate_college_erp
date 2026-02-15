@@ -72,7 +72,14 @@ export default function Home() {
         jsonLd={jsonLd}
       />
 
-      <HeroSlider slides={HERO_SLIDES} interval={5500} />
+      <HeroSlider
+        slides={HERO_SLIDES}
+        interval={5500}
+        addressDetails={{
+          address: settings.address || '2508 Mainway Meadows, Harare, Zimbabwe',
+          phone: settings.phone || '07795977691',
+        }}
+      />
 
       <section className="container section" style={{ padding: '3rem 0' }} aria-labelledby="why-us">
         <AnimateOnScroll>
