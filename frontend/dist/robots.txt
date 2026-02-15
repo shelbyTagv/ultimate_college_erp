@@ -1,0 +1,13 @@
+# Ultimate College of Technology - robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /teacher
+Disallow: /student
+Disallow: /parent
+Disallow: /finance
+Disallow: /login
+Disallow: /register
+
+# Sitemap (update base URL when deploying)
+Sitemap: /sitemap.xml
