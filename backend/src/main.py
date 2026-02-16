@@ -2,6 +2,7 @@ import logging
 import time
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
 from .config import get_settings
 from .auth.routes import router as auth_router
@@ -33,6 +34,16 @@ app = FastAPI(
     description="High School Management ERP – ZIMSEC aligned",
     version="1.0.0",
 )
+
+# Trust all hosts (for Render/Proxy compatibility)
+app.add_middleware(
+    TrustedHostMiddleware, allowed_hosts=["*"]
+)
+
+# Startup event to verify deployment version
+@app.on_event("startup")
+async def startup_event():
+    logger.info("Verifying Deployment v2: Proxy headers and TrustedHostMiddleware enabled")
 
 # Middleware for logging requests
 @app.middleware("http")
