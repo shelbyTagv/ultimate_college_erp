@@ -43,7 +43,7 @@ app.add_middleware(
 # Startup event to verify deployment version and database connection
 @app.on_event("startup")
 async def startup_event():
-    logger.info("Verifying Deployment v2: Proxy headers and TrustedHostMiddleware enabled")
+    logger.info("Verifying Deployment v3: Middleware Reordered (Log -> CORS)")
     
     # Verify Database Connection
     try:
@@ -54,6 +54,25 @@ async def startup_event():
         logger.info("✅ Database Connection Successful")
     except Exception as e:
         logger.error(f"❌ Database Connection Failed: {e}")
+
+# CORS Configuration
+# Moved before Logging Middleware so Logging is added LAST (runs FIRST)
+origins = settings.cors_origins_list
+if "*" in origins and len(origins) == 1:
+    logger.warning("CORS_ORIGINS is set to '*' with allow_credentials=True. This allows requests but credentials (cookies/auth headers) might be blocked by browsers.")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Manual OPTIONS handler for preflight checks (Fallback)
+@app.options("/{path:path}")
+async def options_handler(path: str):
+    return {}
 
 # Middleware for logging requests
 @app.middleware("http")
@@ -73,23 +92,7 @@ async def log_requests(request: Request, call_next):
     logger.debug(f"Response Status: {response.status_code} | Time: {formatted_process_time}ms")
     return response
 
-# CORS Configuration
-# IMPORTANT: If allow_credentials is True, allow_origins cannot be ["*"].
-# You must specify the exact frontend origin(s) in your .env or Render settings.
-# e.g., CORS_ORIGINS="https://your-frontend.onrender.com,http://localhost:5173"
-origins = settings.cors_origins_list
-if "*" in origins and len(origins) == 1:
-    # If default is still "*", we warn but keep it to avoid breaking dev if they haven't set it yet.
-    # However, browsers will block credentials with wildcard.
-    logger.warning("CORS_ORIGINS is set to '*' with allow_credentials=True. This allows requests but credentials (cookies/auth headers) might be blocked by browsers.")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True, # Changed to True to support auth headers/cookies if needed
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 API_PREFIX = "/api"
 
