@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+import logging
+import time
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import get_settings
@@ -20,6 +22,10 @@ from .uploads.routes import router as uploads_router
 from .applications.routes import router as applications_router
 from .learning.routes import router as learning_router
 
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 settings = get_settings()
 
 app = FastAPI(
@@ -28,10 +34,38 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Middleware for logging requests
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    logger.debug(f"Incoming Request: {request.method} {request.url}")
+    logger.debug(f"Headers: {request.headers}")
+    
+    try:
+        response = await call_next(request)
+    except Exception as e:
+        logger.error(f"Request failed: {e}")
+        raise e
+        
+    process_time = (time.time() - start_time) * 1000
+    formatted_process_time = "{0:.2f}".format(process_time)
+    logger.debug(f"Response Status: {response.status_code} | Time: {formatted_process_time}ms")
+    return response
+
+# CORS Configuration
+# IMPORTANT: If allow_credentials is True, allow_origins cannot be ["*"].
+# You must specify the exact frontend origin(s) in your .env or Render settings.
+# e.g., CORS_ORIGINS="https://your-frontend.onrender.com,http://localhost:5173"
+origins = settings.cors_origins_list
+if "*" in origins and len(origins) == 1:
+    # If default is still "*", we warn but keep it to avoid breaking dev if they haven't set it yet.
+    # However, browsers will block credentials with wildcard.
+    logger.warning("CORS_ORIGINS is set to '*' with allow_credentials=True. This allows requests but credentials (cookies/auth headers) might be blocked by browsers.")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
-    allow_credentials=False,
+    allow_origins=origins,
+    allow_credentials=True, # Changed to True to support auth headers/cookies if needed
     allow_methods=["*"],
     allow_headers=["*"],
 )
