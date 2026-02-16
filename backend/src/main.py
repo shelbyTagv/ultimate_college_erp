@@ -40,10 +40,20 @@ app.add_middleware(
     TrustedHostMiddleware, allowed_hosts=["*"]
 )
 
-# Startup event to verify deployment version
+# Startup event to verify deployment version and database connection
 @app.on_event("startup")
 async def startup_event():
     logger.info("Verifying Deployment v2: Proxy headers and TrustedHostMiddleware enabled")
+    
+    # Verify Database Connection
+    try:
+        from .db import get_cursor
+        with get_cursor() as cur:
+            cur.execute("SELECT 1")
+            cur.fetchone()
+        logger.info("✅ Database Connection Successful")
+    except Exception as e:
+        logger.error(f"❌ Database Connection Failed: {e}")
 
 # Middleware for logging requests
 @app.middleware("http")
