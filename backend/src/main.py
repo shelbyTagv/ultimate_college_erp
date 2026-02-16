@@ -44,7 +44,7 @@ app = FastAPI(
 # Startup event to verify deployment version and database connection
 @app.on_event("startup")
 async def startup_event():
-    logger.info("Verifying Deployment v4: Disabled TrustedHostMiddleware + Origin Logging")
+    logger.info("Verifying Deployment v5: Cleaned Origins (trailing slashes removed)")
     logger.info(f"DEBUG: CORS_ORIGINS = {settings.cors_origins_list}")
     
     # Verify Database Connection
