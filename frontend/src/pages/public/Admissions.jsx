@@ -67,7 +67,8 @@ export default function Admissions() {
             <div className="container" style={{ maxWidth: 560 }}>
               <div className="card" style={{ textAlign: 'center' }}>
                 <h2 style={{ color: 'var(--primary)' }}>Application Received</h2>
-                <p>Your application has been submitted. Our team will review it and contact you. You may be asked to upload documents (birth certificate, previous results) when we get in touch.</p>
+                <p>Your application has been submitted. Our team will review it and contact you by phone or message to confirm whether a place has been offered. If offered, you will be given login credentials so you can access the student portal.</p>
+                <p>Once you have received confirmation and your login, please follow the instructions in the portal to pay school fees and complete enrollment. You may be asked to upload documents (birth certificate, previous results) during this process.</p>
               </div>
             </div>
           </AnimateOnScroll>
@@ -76,7 +77,14 @@ export default function Admissions() {
         <div className="page-content">
           <article className="container" style={{ maxWidth: 640 }}>
             <AnimateOnScroll>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>Submit your application for Form 1–6. Select desired form and stream. After review, you will be guided through document upload and fees.</p>
+              <div className="card" style={{ marginBottom: '1rem' }}>
+                <h3 style={{ marginTop: 0, color: 'var(--primary)' }}>How to apply</h3>
+                <ol style={{ margin: '0 0 0 1.25rem', color: 'var(--text-muted)' }}>
+                  <li>Fill in the application form with the student's details and submit. Wait for our review and approval.</li>
+                  <li>We will review your application and contact you by phone or message to confirm the placement and provide login credentials.</li>
+                  <li>After you receive confirmation and your login details, proceed to pay the required school fees and complete enrollment. You may be asked to upload supporting documents (birth certificate, previous results) during this process.</li>
+                </ol>
+              </div>
             </AnimateOnScroll>
             <AnimateOnScroll delay={0.1}>
               <form onSubmit={handleSubmit} className="card">

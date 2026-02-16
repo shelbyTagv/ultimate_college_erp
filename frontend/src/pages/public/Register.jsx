@@ -10,7 +10,15 @@ export default function Register() {
           <h1 style={{ color: 'var(--primary)', marginBottom: '1rem', textAlign: 'center' }}>Register</h1>
           <div className="card">
             <p>New students must apply through <strong>Admissions</strong>. After your application is approved, the school will create your account and send you login details.</p>
-            <p>If you are staff (teacher, admin, finance), please contact the school administrator to get your account.</p>
+            <div style={{ marginTop: '0.5rem', color: 'var(--text-muted)' }}>
+              <strong>How to apply</strong>
+              <ol style={{ margin: '0.25rem 0 0 1.25rem' }}>
+                <li>Complete and submit the Admissions form with the student's details.</li>
+                <li>Wait for our review — we'll contact you by call or message to confirm placement and provide login credentials.</li>
+                <li>After confirmation, log in and follow the portal instructions to pay fees and finish enrollment.</li>
+              </ol>
+            </div>
+            <p style={{ marginTop: '0.5rem' }}>If you are staff (teacher, admin, finance), please contact the school administrator to get your account.</p>
             <Link to="/admissions" className="btn btn-primary" style={{ marginRight: '0.5rem' }}>Go to Admissions</Link>
             <Link to="/login" className="btn btn-outline">Login</Link>
           </div>
