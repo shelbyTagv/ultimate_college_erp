@@ -36,14 +36,16 @@ app = FastAPI(
 )
 
 # Trust all hosts (for Render/Proxy compatibility)
-app.add_middleware(
-    TrustedHostMiddleware, allowed_hosts=["*"]
-)
+# COMMENTED OUT FOR DEBUGGING - suspecting 400 Bad Request source
+# app.add_middleware(
+#     TrustedHostMiddleware, allowed_hosts=["*"]
+# )
 
 # Startup event to verify deployment version and database connection
 @app.on_event("startup")
 async def startup_event():
-    logger.info("Verifying Deployment v3: Middleware Reordered (Log -> CORS)")
+    logger.info("Verifying Deployment v4: Disabled TrustedHostMiddleware + Origin Logging")
+    logger.info(f"DEBUG: CORS_ORIGINS = {settings.cors_origins_list}")
     
     # Verify Database Connection
     try:
@@ -72,6 +74,7 @@ app.add_middleware(
 # Manual OPTIONS handler for preflight checks (Fallback)
 @app.options("/{path:path}")
 async def options_handler(path: str):
+    logger.info(f"DEBUG: Handling OPTIONS request for {path}")
     return {}
 
 # Middleware for logging requests
