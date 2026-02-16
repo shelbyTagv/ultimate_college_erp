@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     jwt_expire_minutes: int = 60
     upload_dir: str = "./uploads"
     max_upload_mb: int = 10
-    cors_origins: str = "http://localhost:5173,http://localhost:3000"
+    cors_origins: str = "*"
 
     class Config:
         env_file = ".env"

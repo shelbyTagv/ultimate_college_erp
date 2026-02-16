@@ -10,6 +10,7 @@ services:
       - key: DATABASE_URL
       - key: JWT_SECRET
       - key: CORS_ORIGINS
+        value: "*"
       - key: CARGO_HOME
         value: /tmp/.cargo
       - key: RUSTUP_HOME
